@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<title>Liste des produits</title>
+
+</head>
+
+<body>
+	<h1 th:text="'Liste de '+${nombre}+' produits'"></h1>
+	<a th:href="@{/produit/add}" class="btn btn-outline-warning">Ajouter
+		un nouveau produit</a>
+	<form action="/produit/search" method="post">
+		<input class="form-control" type="text" name="nom"
+			placeholder="saisir le nom  du produit"> <input
+			class="btn btn-outline-primary" type="submit" value="rechercher">
+	</form>
+	<form action="/produit/filtre" method="post" id="f">
+		<select class="btn btn-outline-info" name="categorie"
+			onchange="document.getElementById('f').submit()">
+			<option >Toutes les categories</option>
+			<option th:each="cat : ${categories}" th:value="${cat.id}"
+				th:text="${cat.nom}"></option>
+		</select>
+	</form>
+	<table class="table table-bordered">
+		<TR>
+			<TH>id</TH>
+			<TH>nom</TH>
+			<TH>prix</TH>
+			<TH>quantite</TH>
+			<TH>categorie</TH>
+			<TH>photo</TH>
+			<TH>Supprimer</TH>
+		</TR>
+		<tr th:each="produit : ${produits}">
+
+			<td th:text="${produit.id}"></td>
+
+			<td th:text="${produit.nom}"></td>
+
+			<td th:text="${produit.prix}"></td>
+
+			<td th:text="${produit.quantite}"></td>
+			<td th:text="${produit.categorie.nom}"></td>
+			<td th:text="${produit.photo}"></td>
+			<td><a th:href="@{/produit/detail/{id} (id=${produit.id})}"
+				class="btn btn-outline-info">Détail</a><a
+				th:href="@{/produit/delete/{id} (id=${produit.id})}"
+				onclick="return confirm('Voulez vous vraiment supprimer cet article?')"
+				class="btn btn-outline-danger">Supprimer</a> <a
+				th:href="@{/produit/edit/{id} (id=${produit.id})}"
+				class="btn btn-outline-success">Modifier</a></td>
+		</tr>
+
+	</table>
+
+</body>
+</html>

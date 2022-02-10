@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Detail d'un Produit</title>
+</head>
+<body>
+	<h1>MDetail d'un produit</h1>
+	<form action="/produit/update" method="post"
+		enctype="multipart/form-data">
+		<p>
+			<label for="nom">id du produit : </label> <input name="id"
+				th:value="${produit.id}" id="nom" required>
+		</p>
+		<p>
+			<label for="nom">Nom du produit : </label> <input type="text"
+				name="nom" th:value="${produit.nom}">
+		</p>
+		<p>
+			<label for="prix">Prix : </label> <input type="number" step="0.1"
+				name="prix" th:value="${produit.prix}" id="prix" required>
+		</p>
+		<p>
+			<label for="quantite">Quantité : </label> <input type="number"
+				min="1" name="quantite" th:value="${produit.quantite}" id="quantite"
+				required>
+		</p>
+		<p>
+			<label for="categorie">Categorie : </label> <select name="categorie">
+				<option th:selected="${cat.id==produit.categorie.id}"
+					th:each="cat : ${categories}" th:value="${cat.id}"
+					th:text="${cat.nom}"></option>
+			</select>
+		</p>
+		<p>
+			<label for="photo">photo du produit : </label> <input type="text"
+				name="photo" th:value="${produit.photo}">
+			<img th:src="@{/photos/{img} (img=${produit.photo})}">
+		</p>
+		<p>
+			<input type="submit" value="modifier"> <input type="reset"
+				value="Effacer">
+		</p>
+	</form>
+
+</body>
+</html>
